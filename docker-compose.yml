@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+  tour-db:
+    image: postgres:15
+    container_name: tour-db
+    restart: always
+    environment:
+      POSTGRES_DB: tourdb
+      POSTGRES_USER: touruser
+      POSTGRES_PASSWORD: tourpass
+    ports:
+      - "5433:5432"
+    networks:
+      - tours-network
+    volumes:
+      - tourdata:/var/lib/postgresql/data
+
+  booking-db:
+    image: postgres:15
+    container_name: booking-db
+    restart: always
+    environment:
+      POSTGRES_DB: bookingdb
+      POSTGRES_USER: bookinguser
+      POSTGRES_PASSWORD: bookingpass
+    ports:
+      - "5434:5432"
+    networks:
+      - tours-network
+    volumes:
+      - bookingdata:/var/lib/postgresql/data
+
+  tour-service:
+    build: ./aca.touring.service
+    ports:
+      - "8081:8080"
+    networks:
+      - tours-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tour-db:5432/tourdb
+      SPRING_DATASOURCE_USERNAME: touruser
+      SPRING_DATASOURCE_PASSWORD: tourpass
+    depends_on:
+      - tour-db
+
+  booking-service:
+    build: ./aca.touring.booking
+    ports:
+      - "8082:8080"
+    networks:
+      - tours-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://booking-db:5432/bookingdb
+      SPRING_DATASOURCE_USERNAME: bookinguser
+      SPRING_DATASOURCE_PASSWORD: bookingpass
+    depends_on:
+      - booking-db
+
+  frontend:
+    build: ./front
+    ports:
+      - "3000:3000"
+    networks:
+      - tours-network
+    environment:
+      - NEXT_PUBLIC_TOUR_API=http://tour-service:8080
+      - NEXT_PUBLIC_BOOKING_API=http://booking-service:8080
+
+networks:
+  tours-network:
+    driver: bridge
+
+volumes:
+  tourdata:
+  bookingdata:
