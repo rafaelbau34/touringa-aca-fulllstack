@@ -58,7 +58,7 @@ services:
       - booking-db
 
   frontend:
-    build: ./front
+    build: ./touring
     ports:
       - "3000:3000"
     networks:
