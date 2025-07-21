@@ -33,4 +33,21 @@ public class BookingServiceImpl implements BookingService {
     public List<Booking> getAllBookings() {
         return repository.findAll();
     }
+
+    @Override
+    public Booking updateBooking(Long id, BookingRequest request) {
+        Booking booking = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Booking not found"));
+        booking.setCustomerName(request.getCustomerName());
+        booking.setTourName(request.getTourName());
+        return repository.save(booking);
+    }
+
+    @Override
+    public void deleteBooking(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Booking not found");
+        }
+        repository.deleteById(id);
+    }
 }
