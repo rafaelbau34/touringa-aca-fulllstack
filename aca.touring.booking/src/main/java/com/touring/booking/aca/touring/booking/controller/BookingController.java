@@ -13,41 +13,38 @@ import java.util.List;
 @RequestMapping("/api/bookings")
 public class BookingController {
 
-    private final BookingService service;
+    private final BookingService bookingService;
 
-    public BookingController(BookingService service) {
-        this.service = service;
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
     }
 
     @PostMapping
     public ResponseEntity<Booking> createBooking(@RequestBody BookingRequest request) {
-        Booking created = service.createBooking(request);
-        return new ResponseEntity<>(created, HttpStatus.CREATED); 
+        Booking booking = bookingService.createBooking(request);
+        return new ResponseEntity<>(booking, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<Booking>> getAllBookings() {
-        List<Booking> bookings = service.getAllBookings();
-        return new ResponseEntity<>(bookings, HttpStatus.OK); 
+        return ResponseEntity.ok(bookingService.getAllBookings());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Booking> updateBooking(@PathVariable Long id, @RequestBody BookingRequest request) {
-        try {
-            Booking updated = service.updateBooking(id, request);
-            return new ResponseEntity<>(updated, HttpStatus.OK); 
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
-        }
+        Booking updated = bookingService.updateBooking(id, request);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
-        try {
-            service.deleteBooking(id);
-            return new ResponseEntity<>("Booking deleted successfully.", HttpStatus.NO_CONTENT); 
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>("Booking not found.", HttpStatus.NOT_FOUND); 
-        }
+    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<Booking> cancelBooking(@PathVariable Long id) {
+        Booking cancelledBooking = bookingService.cancelBooking(id);
+        return ResponseEntity.ok(cancelledBooking);
     }
 }

@@ -12,11 +12,15 @@ public class Booking {
 
     private String customerName;
     private String tourName;
-    private LocalDateTime bookingDate;
-    private boolean paid;
-    private boolean cancelled;
 
-    // Getters and Setters
+    private LocalDateTime bookingDate;
+    private LocalDateTime tourDate;
+    
+    private double price;
+    private boolean cancelled = false;
+    
+
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -29,9 +33,13 @@ public class Booking {
     public LocalDateTime getBookingDate() { return bookingDate; }
     public void setBookingDate(LocalDateTime bookingDate) { this.bookingDate = bookingDate; }
 
-    public boolean isPaid() { return paid; }
-    public void setPaid(boolean paid) { this.paid = paid; }
+    public LocalDateTime getTourDate() { return tourDate; }
+    public void setTourDate(LocalDateTime tourDate) { this.tourDate = tourDate; }
+
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
     public boolean isCancelled() { return cancelled; }
     public void setCancelled(boolean cancelled) { this.cancelled = cancelled; }
-}
+    }
+

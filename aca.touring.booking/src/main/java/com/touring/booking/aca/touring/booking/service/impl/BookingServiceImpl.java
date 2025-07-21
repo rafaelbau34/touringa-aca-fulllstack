@@ -22,9 +22,10 @@ public class BookingServiceImpl implements BookingService {
     public Booking createBooking(BookingRequest request) {
         Booking booking = new Booking();
         booking.setCustomerName(request.getCustomerName());
-    booking.setTourName(request.getTourName());
+        booking.setTourName(request.getTourName());
+        booking.setPrice(request.getPrice());
+        booking.setTourDate(request.getTourDate());
         booking.setBookingDate(LocalDateTime.now());
-        booking.setPaid(false);
         booking.setCancelled(false);
         return repository.save(booking);
     }
@@ -37,9 +38,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking updateBooking(Long id, BookingRequest request) {
         Booking booking = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
         booking.setCustomerName(request.getCustomerName());
         booking.setTourName(request.getTourName());
+        booking.setPrice(request.getPrice());
+        booking.setTourDate(request.getTourDate());
         return repository.save(booking);
     }
 
@@ -49,5 +52,13 @@ public class BookingServiceImpl implements BookingService {
             throw new RuntimeException("Booking not found");
         }
         repository.deleteById(id);
+    }
+
+    @Override
+    public Booking cancelBooking(Long id) {
+        Booking booking = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+        booking.setCancelled(true);
+        return repository.save(booking);
     }
 }
