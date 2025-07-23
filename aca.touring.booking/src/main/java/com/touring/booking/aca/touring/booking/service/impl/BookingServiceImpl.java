@@ -22,9 +22,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking createBooking(BookingRequest request) {
         Booking booking = new Booking();
         booking.setCustomerName(request.getCustomerName());
-        booking.setTourName(request.getTourName());
-        booking.setPrice(request.getPrice());
-        booking.setTourDate(request.getTourDate());
+        booking.setCellNumber(request.getCellNumber());
         booking.setBookingDate(LocalDateTime.now());
         booking.setCancelled(false);
         return repository.save(booking);
@@ -40,9 +38,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
         booking.setCustomerName(request.getCustomerName());
-        booking.setTourName(request.getTourName());
-        booking.setPrice(request.getPrice());
-        booking.setTourDate(request.getTourDate());
+        booking.setCellNumber(request.getCellNumber());
         return repository.save(booking);
     }
 

@@ -1,9 +1,10 @@
 package com.touring.service.aca.touring.service.model;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+@Entity
 public class Tour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,7 @@ public class Tour {
     private double price;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    private LocalDate availableDate;
+    private LocalDateTime availableDate;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -32,6 +33,6 @@ public class Tour {
     public double getPrice() { return price;}
     public void setPrice(double price) { this.price = price; } 
 
-    public LocalDate getAvailableDate() { return availableDate; }
-    public void setAvailableDate(LocalDate availableDate) { this.availableDate = availableDate;}
+    public LocalDateTime getAvailableDate() { return availableDate; }
+    public void setAvailableDate(LocalDateTime availableDate) { this.availableDate = availableDate;}
 }

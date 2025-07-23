@@ -3,8 +3,11 @@ package com.touring.service.aca.touring.service.controller;
 import com.touring.service.aca.touring.service.dto.TourRequest;
 import com.touring.service.aca.touring.service.model.Tour;
 import com.touring.service.aca.touring.service.service.TourService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,23 +21,26 @@ public class TourController {
     }
 
     @PostMapping
-    public Tour createTour(@RequestBody TourRequest request) {
-        return service.createTour(request);
+    public ResponseEntity<Tour> createTour(@Valid @RequestBody TourRequest request) {
+        Tour createdTour = service.createTour(request);
+        return new ResponseEntity<>(createdTour, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Tour> getAllTours() {
-        return service.getAllTours();
+    public ResponseEntity<List<Tour>> getAllTours() {
+        List<Tour> tours = service.getAllTours();
+        return ResponseEntity.ok(tours);
     }
 
     @PutMapping("/{id}")
-    public Tour updateTour(@PathVariable Long id, @RequestBody TourRequest request) {
-        return service.updateTour(id, request);
+    public ResponseEntity<Tour> updateTour(@PathVariable Long id, @Valid @RequestBody TourRequest request) {
+        Tour updatedTour = service.updateTour(id, request);
+        return ResponseEntity.ok(updatedTour);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTour(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTour(@PathVariable Long id) {
         service.deleteTour(id);
+        return ResponseEntity.noContent().build();
     }
 }
-
