@@ -2,10 +2,14 @@ package com.touring.booking.aca.touring.booking.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BookingRequest {
     private String customerName;
     private String tourName;
     private double price;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime tourDate;
 
     public String getCustomerName() { return customerName; }

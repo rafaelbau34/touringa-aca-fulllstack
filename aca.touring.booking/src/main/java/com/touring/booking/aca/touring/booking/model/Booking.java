@@ -3,6 +3,8 @@ package com.touring.booking.aca.touring.booking.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Booking {
 
@@ -13,7 +15,10 @@ public class Booking {
     private String customerName;
     private String tourName;
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime bookingDate;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime tourDate;
     
     private double price;
