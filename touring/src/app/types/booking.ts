@@ -1,12 +1,12 @@
-export interface BookingRequest {
-  name: string;
-  email: string;
-  date: string; // formato "YYYY-MM-DD"
-  tourName: string;
+export interface Booking {
+  id: number;
+  customerName: string;
+  cellNumber: string;
+  bookingDate: string;
+  cancelled: boolean;
 }
 
-export interface Booking extends BookingRequest {
-  id: number;
-  cancelled: boolean;
-  bookingDate: string;
+export interface BookingRequest {
+  customerName: string;
+  cellNumber: string;
 }

@@ -1,20 +1,23 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  const linkClass = (path: string) =>
+    pathname === path ? "text-blue-600 font-semibold" : "text-gray-700";
+
   return (
-    <nav className="bg-blue-700 text-white px-6 py-4">
-      <div className="flex justify-between items-center max-w-5xl mx-auto">
-        <Link href="/" className="text-xl font-bold">
-          Touring Acapulco
+    <nav className="bg-white shadow p-4 mb-6">
+      <div className="max-w-4xl mx-auto flex gap-4">
+        <Link href="/bookings" className={linkClass("/bookings")}>
+          Reservas
         </Link>
-        <div className="space-x-4">
-          <Link href="/bookings" className="hover:underline">
-            Reservas
-          </Link>
-          <Link href="/bookings/new" className="hover:underline">
-            Nueva
-          </Link>
-        </div>
+        <Link href="/bookings/new" className={linkClass("/bookings/new")}>
+          Nueva Reserva
+        </Link>
       </div>
     </nav>
   );

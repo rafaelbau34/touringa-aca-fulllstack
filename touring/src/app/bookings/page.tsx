@@ -1,26 +1,14 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { Booking } from "@/app/types/booking";
-import { getBookings } from "@/app/lib/api";
+import { getAllBookings } from "@/app/lib/api";
 import BookingCard from "@/app/components/BookingCard";
 
-export default function BookingListPage() {
-  const [bookings, setBookings] = useState<Booking[]>([]);
-
-  useEffect(() => {
-    const load = async () => {
-      const data = await getBookings();
-      setBookings(data);
-    };
-    load();
-  }, []);
+export default async function BookingsPage() {
+  const bookings = await getAllBookings();
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Reservas Registradas</h1>
+    <div className="p-6 max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Reservas</h1>
       {bookings.length === 0 ? (
-        <p>No hay reservas aún.</p>
+        <p>No hay reservas registradas.</p>
       ) : (
         bookings.map((b) => <BookingCard key={b.id} booking={b} />)
       )}
