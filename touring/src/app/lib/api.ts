@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Booking, BookingRequest } from "@/app/types/booking";
 
-const API_URL = "http://localhost:8082/api/bookings";
+const API_URL =
+  process.env.NEXT_PUBLIC_BOOKING_API || "http://localhost:8082/api/bookings";
 
 export const getAllBookings = async (): Promise<Booking[]> => {
   const response = await axios.get(API_URL);

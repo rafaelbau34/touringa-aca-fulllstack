@@ -12,9 +12,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className="bg-gray-100 text-gray-900">
+      <body className="bg-gradient-to-b from-cyan-50 to-white text-gray-900 font-sans min-h-screen flex flex-col">
         <Navbar />
-        <main className="max-w-5xl mx-auto p-6">{children}</main>
+        <main className="flex-grow max-w-5xl mx-auto px-6 py-10">
+          {children}
+        </main>
+        <footer className="text-center text-sm text-gray-500 py-6">
+          &copy; {new Date().getFullYear()} Touring Acapulco. Todos los derechos
+          reservados.
+        </footer>
       </body>
     </html>
   );

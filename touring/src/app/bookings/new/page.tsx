@@ -1,3 +1,4 @@
+"use client";
 import BookingForm from "@/app/components/BookingForm";
 
 export default function NewBookingPage() {
