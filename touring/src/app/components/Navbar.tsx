@@ -1,10 +1,19 @@
+// components/Navbar.tsx
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getToken, removeToken } from "@/app/lib/auth";
 
 export default function Navbar() {
   const path = usePathname();
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(!!getToken());
+  }, [path]);
 
   const linkClass = (href: string) =>
     `px-4 py-2 rounded-md font-medium ${
@@ -12,6 +21,12 @@ export default function Navbar() {
         ? "bg-cyan-600 text-white shadow-md"
         : "text-cyan-700 hover:bg-cyan-100 transition-colors"
     }`;
+
+  const handleLogout = () => {
+    removeToken();
+    setIsAuthenticated(false);
+    router.push("/auth/login");
+  };
 
   return (
     <nav className="bg-white shadow-md">
@@ -29,6 +44,29 @@ export default function Navbar() {
           <Link href="/bookings/new" className={linkClass("/bookings/new")}>
             Nueva Reserva
           </Link>
+          <Link href="/tours" className={linkClass("/tours")}>
+            Tours
+          </Link>
+          {!isAuthenticated ? (
+            <>
+              <Link href="/auth/login" className={linkClass("/auth/login")}>
+                Login
+              </Link>
+              <Link
+                href="/auth/register"
+                className={linkClass("/auth/register")}
+              >
+                Registro
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="text-red-600 font-semibold hover:underline ml-2"
+            >
+              Cerrar sesión
+            </button>
+          )}
         </div>
       </div>
     </nav>
