@@ -1,25 +1,29 @@
-// lib/api.ts
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
-// API para Auth y Tours (Puerto 8081)
+// API para Auth y Tours
 const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8081",
 });
 
-// API para Bookings (Puerto 8082)
+// API para Bookings
 const BOOKING_API = axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_BOOKING_API || "http://localhost:8082/api/bookings",
 });
 
 // Interceptor JWT para ambas APIs
-import type { AxiosInstance } from "axios";
-
 const addAuthInterceptor = (instance: AxiosInstance) => {
   instance.interceptors.request.use((config) => {
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    if (token && config.headers) {
+
+    // ❌ No agregar token en login o registro
+    if (
+      token &&
+      config.headers &&
+      !config.url?.includes("/auth/login") &&
+      !config.url?.includes("/auth/register")
+    ) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -31,11 +35,19 @@ addAuthInterceptor(BOOKING_API);
 
 // ----------------------
 // Auth
-export const registerUser = (data: {
+export const registerUser = async (data: {
   username: string;
   password: string;
   role: string;
-}) => API.post("/auth/register", data);
+}) => {
+  try {
+    const res = await API.post("/auth/register", data);
+    return res.data;
+  } catch (err: any) {
+    console.error("Error en registro:", err.response?.data || err.message);
+    throw err;
+  }
+};
 
 export const loginUser = (data: { username: string; password: string }) =>
   API.post("/auth/login", data);
@@ -79,5 +91,5 @@ export const cancelBooking = async (id: number): Promise<Booking> => {
   return response.data;
 };
 
-// Export default solo para uso directo si lo necesitas en configuración
+// Export default solo si lo necesitas
 export default API;

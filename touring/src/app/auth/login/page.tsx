@@ -1,4 +1,3 @@
-// app/auth/login/page.tsx
 "use client";
 
 import LoginForm from "@/app/components/LoginForm";
@@ -16,7 +15,7 @@ export default function LoginPage() {
   }, [router]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-100">
+    <div className="flex items-center justify-center min-h-screen">
       <LoginForm />
     </div>
   );

@@ -1,4 +1,3 @@
-// components/LoginForm.tsx
 "use client";
 
 import { useState } from "react";
@@ -25,16 +24,19 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleLogin}
-      className="space-y-4 max-w-md mx-auto p-4 bg-white shadow rounded-lg"
+      className="max-w-md mx-auto bg-white/90 backdrop-blur p-8 rounded-lg shadow-lg space-y-6"
     >
-      <h2 className="text-xl font-bold">Iniciar Sesión</h2>
+      <h2 className="text-3xl font-bold text-cyan-700 text-center">
+        Iniciar Sesión
+      </h2>
+
       <input
         type="text"
         placeholder="Usuario"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
-        className="w-full border p-2 rounded"
+        className="w-full"
       />
       <input
         type="password"
@@ -42,11 +44,11 @@ export default function LoginForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
-        className="w-full border p-2 rounded"
+        className="w-full"
       />
       <button
         type="submit"
-        className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+        className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 rounded-md transition-colors"
       >
         Entrar
       </button>

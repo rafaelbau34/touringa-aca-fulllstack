@@ -1,4 +1,3 @@
-// components/RegisterForm.tsx
 "use client";
 
 import { useState } from "react";
@@ -25,17 +24,21 @@ export default function RegisterForm() {
       await registerUser(formData);
       alert("Registro exitoso");
       router.push("/auth/login");
-    } catch {
-      alert("Error al registrar");
+    } catch (err: any) {
+      console.error("Error al registrar:", err.response?.data || err.message);
+      alert(
+        "Error al registrar: " + (err.response?.data || "Intente más tarde")
+      );
     }
   };
 
   return (
     <form
       onSubmit={handleRegister}
-      className="space-y-4 max-w-md mx-auto p-4 bg-white shadow rounded-lg"
+      className="max-w-md mx-auto bg-white/90 backdrop-blur p-8 rounded-lg shadow-lg space-y-6"
     >
-      <h2 className="text-xl font-bold">Registrarse</h2>
+      <h2 className="text-3xl font-bold text-blue-700 text-center">Registro</h2>
+
       <input
         type="text"
         name="username"
@@ -43,8 +46,9 @@ export default function RegisterForm() {
         value={formData.username}
         onChange={handleChange}
         required
-        className="w-full border p-2 rounded"
+        className="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
       />
+
       <input
         type="password"
         name="password"
@@ -52,20 +56,22 @@ export default function RegisterForm() {
         value={formData.password}
         onChange={handleChange}
         required
-        className="w-full border p-2 rounded"
+        className="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
       />
+
       <select
         name="role"
         value={formData.role}
         onChange={handleChange}
-        className="w-full border p-2 rounded"
+        className="w-full border border-gray-300 rounded px-4 py-3"
       >
         <option value="USER">Usuario</option>
         <option value="ADMIN">Administrador</option>
       </select>
+
       <button
         type="submit"
-        className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+        className="w-full bg-blue-600 hover:bg-green-700 text-white font-semibold py-3 rounded-md transition-colors"
       >
         Registrarse
       </button>

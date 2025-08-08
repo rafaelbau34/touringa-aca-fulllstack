@@ -1,4 +1,3 @@
-// app/auth/register/page.tsx
 "use client";
 
 import RegisterForm from "@/app/components/RegisterForm";
@@ -16,7 +15,7 @@ export default function RegisterPage() {
   }, [router]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-green-100">
+    <div className="flex items-center justify-center min-h-screen">
       <RegisterForm />
     </div>
   );

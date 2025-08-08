@@ -40,14 +40,14 @@ export default function BookingForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg space-y-6"
+      className="max-w-md w-full mx-auto mt-16 p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl space-y-6"
     >
-      <h2 className="text-3xl font-bold text-cyan-700 mb-4 text-center">
+      <h2 className="text-3xl font-extrabold text-center text-cyan-700 tracking-tight">
         Nueva Reserva
       </h2>
 
       <div>
-        <label className="block mb-1 font-medium text-gray-700">
+        <label className="block mb-2 text-sm font-semibold text-gray-700">
           Nombre del cliente
         </label>
         <input
@@ -55,14 +55,14 @@ export default function BookingForm() {
           name="customerName"
           value={form.customerName}
           onChange={handleChange}
-          className="border border-gray-300 rounded-md px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
           placeholder="Ej. Juan Pérez"
           required
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
         />
       </div>
 
       <div>
-        <label className="block mb-1 font-medium text-gray-700">
+        <label className="block mb-2 text-sm font-semibold text-gray-700">
           Número de celular
         </label>
         <input
@@ -70,18 +70,20 @@ export default function BookingForm() {
           name="cellNumber"
           value={form.cellNumber}
           onChange={handleChange}
-          className="border border-gray-300 rounded-md px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
           placeholder="Ej. 5551234567"
           required
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
         />
       </div>
 
-      {error && <p className="text-red-600 font-semibold">{error}</p>}
+      {error && (
+        <p className="text-sm text-red-600 font-medium text-center">{error}</p>
+      )}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-cyan-600 hover:bg-cyan-700 disabled:bg-cyan-400 text-white font-semibold py-3 rounded-md transition-colors"
+        className="w-full py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 disabled:bg-cyan-400 text-white font-semibold text-lg transition-all"
       >
         {loading ? "Creando reserva..." : "Crear reserva"}
       </button>
