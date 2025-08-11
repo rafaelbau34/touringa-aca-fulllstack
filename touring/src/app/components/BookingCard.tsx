@@ -1,9 +1,8 @@
-"use client";
-
 import { Booking } from "@/app/types/booking";
 import { cancelBooking, deleteBooking } from "@/app/lib/api";
 import { useRouter } from "next/navigation";
 import { CalendarDays, Phone } from "lucide-react";
+import { FaUmbrellaBeach } from "react-icons/fa";
 
 interface Props {
   booking: Booking;
@@ -54,36 +53,39 @@ export default function BookingCard({ booking }: Props) {
     parseCustomDate(booking.bookingDate)?.toLocaleString() || "Fecha no válida";
 
   return (
-    <div className="bg-gradient-to-br from-white/40 to-white/20 backdrop-blur-xl rounded-2xl shadow-xl shadow-cyan-500/10 border border-white/20 p-6 transition-transform hover:scale-[1.02]">
-      <h2 className="text-2xl font-bold text-cyan-900 mb-4">
-        {booking.customerName}
-      </h2>
+    <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-3xl shadow-lg border border-blue-300 p-6 transition-transform hover:scale-[1.03] hover:shadow-blue-400">
+      <div className="flex items-center mb-4 space-x-3">
+        <FaUmbrellaBeach className="text-blue-500 w-7 h-7" />
+        <h2 className="text-2xl font-bold text-black">
+          {booking.customerName}
+        </h2>
+      </div>
 
-      <div className="flex items-center text-gray-800 mb-2">
-        <Phone className="w-5 h-5 mr-2 text-cyan-700" />
+      <div className="flex items-center text-black mb-2 space-x-2">
+        <Phone className="w-5 h-5 text-blue-600" />
         <span className="font-medium">{booking.cellNumber}</span>
       </div>
 
-      <div className="flex items-center text-gray-800 mb-4">
-        <CalendarDays className="w-5 h-5 mr-2 text-cyan-700" />
+      <div className="flex items-center text-black mb-4 space-x-2">
+        <CalendarDays className="w-5 h-5 text-blue-600" />
         <span>{formattedDate}</span>
       </div>
 
       <span
         className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
           booking.cancelled
-            ? "bg-red-500/20 text-red-700"
-            : "bg-green-500/20 text-green-700"
+            ? "bg-red-500/30 text-red-700"
+            : "bg-blue-500/30 text-blue-700"
         }`}
       >
         {booking.cancelled ? "Cancelada" : "Activa"}
       </span>
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex gap-4">
         {!booking.cancelled && (
           <button
             onClick={handleCancel}
-            className="flex-1 rounded-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-2 shadow-md transition-colors"
+            className="flex-1 rounded-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 shadow-md transition-colors"
           >
             Cancelar
           </button>

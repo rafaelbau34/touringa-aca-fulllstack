@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import { Booking, BookingRequest } from "@/app/types/booking";
 
 // API para Auth y Tours
 const API = axios.create({
@@ -17,7 +18,6 @@ const addAuthInterceptor = (instance: AxiosInstance) => {
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-    // ❌ No agregar token en login o registro
     if (
       token &&
       config.headers &&
@@ -40,13 +40,8 @@ export const registerUser = async (data: {
   password: string;
   role: string;
 }) => {
-  try {
-    const res = await API.post("/auth/register", data);
-    return res.data;
-  } catch (err: any) {
-    console.error("Error en registro:", err.response?.data || err.message);
-    throw err;
-  }
+  const res = await API.post("/auth/register", data);
+  return res.data;
 };
 
 export const loginUser = (data: { username: string; password: string }) =>
@@ -55,15 +50,20 @@ export const loginUser = (data: { username: string; password: string }) =>
 // ----------------------
 // Tours
 export const getTours = () => API.get("/api/tours");
-export const createTour = (data: any) => API.post("/api/tours", data);
-export const updateTour = (id: number, data: any) =>
+
+interface TourPayload {
+  title: string;
+  description: string;
+  price: number;
+}
+
+export const createTour = (data: TourPayload) => API.post("/api/tours", data);
+export const updateTour = (id: number, data: TourPayload) =>
   API.put(`/api/tours/${id}`, data);
 export const deleteTour = (id: number) => API.delete(`/api/tours/${id}`);
 
 // ----------------------
 // Bookings
-import { Booking, BookingRequest } from "@/app/types/booking";
-
 export const getAllBookings = async (): Promise<Booking[]> => {
   const response = await BOOKING_API.get("");
   return response.data;
@@ -91,5 +91,4 @@ export const cancelBooking = async (id: number): Promise<Booking> => {
   return response.data;
 };
 
-// Export default solo si lo necesitas
 export default API;

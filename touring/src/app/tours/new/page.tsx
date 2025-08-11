@@ -1,4 +1,3 @@
-// app/tours/new/page.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -16,8 +15,15 @@ export default function NewTourPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <TourForm />
+    <div
+      className="min-h-screen bg-cover bg-center bg-fixed flex items-center justify-center p-6"
+      style={{
+        backgroundImage: "url('')",
+      }}
+    >
+      <div className="">
+        <TourForm />
+      </div>
     </div>
   );
 }

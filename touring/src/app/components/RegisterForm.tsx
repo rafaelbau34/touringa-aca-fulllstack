@@ -24,11 +24,14 @@ export default function RegisterForm() {
       await registerUser(formData);
       alert("Registro exitoso");
       router.push("/auth/login");
-    } catch (err: any) {
-      console.error("Error al registrar:", err.response?.data || err.message);
-      alert(
-        "Error al registrar: " + (err.response?.data || "Intente más tarde")
-      );
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error al registrar:", err.message);
+        alert("Error al registrar: " + err.message);
+      } else {
+        console.error("Error desconocido:", err);
+        alert("Error desconocido en el registro");
+      }
     }
   };
 

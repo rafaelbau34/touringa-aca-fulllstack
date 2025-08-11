@@ -1,4 +1,3 @@
-// components/TourForm.tsx
 "use client";
 
 import { useState } from "react";
@@ -16,7 +15,7 @@ export default function TourForm() {
     try {
       await createTour({ title, description, price });
       router.push("/tours");
-    } catch (error) {
+    } catch {
       alert("Error al crear tour");
     }
   };
